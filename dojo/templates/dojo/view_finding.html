@@ -271,6 +271,9 @@
                             <th>CWE</th>
                             <th>Vulnerability Id</th>
                         <th>Found by</th>
+                        {% if finding.vuln_id_from_tool %}
+                            <th>Vuln ID from tool</th>
+                        {% endif %}
                     {% endblock header_head %}
                 </tr>
                 <tr>
@@ -418,10 +421,19 @@
                             {% endif %}
                         {% endif %}
                         </td>
-                        <td> {% for scanner in found_by %}
-                            {{ scanner }}
-                        {% endfor %}</td>
+                        <td> 
+                            {% if found_by %}
+                                {% for scanner in found_by %}
+                                    {{ scanner }}
+                                {% endfor %}
+                            {% else %}
+                                {{ finding.test.test_type }}
+                            {% endif %}
+                        </td>
                         {% endwith %}
+                        {% if finding.vuln_id_from_tool %}
+                            <td>{{ finding.vuln_id_from_tool }}</td>
+                        {% endif %}
                     {% endblock header_body %}
                 </tr>
             </table>
